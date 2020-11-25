@@ -1,0 +1,51 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Strava Annual Leaderboard{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">X-Centris Run</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      {% if user %}
+        <li class="nav-item">
+          <a class="nav-link" href="/leaderboard">Leaderboard</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</span></a>
+        </li>
+      {% else %}
+          <li class="nav-item">
+          <a class="nav-link" href="/authorize">Login</span></a>
+        </li>
+      {% endif %}
+
+    </ul>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+  <div class="jumbotron">
+    {% if user %}
+
+      <h1 class="display-4">Hello, {{ user.firstname }}!</h1>
+      <p class="lead">Please head over to Clubs to look at the annual leader boards!</p>
+      <hr class="my-4">
+      <p>This app is able to read your activity feed. It does not store any of the data.</p>
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" href="/clubs" role="button">Go to Clubs</a>
+      </p>
+
+    {% else %}
+          <h1 class="display-4">Hello!</h1>
+            <p class="lead">Please <a href="/authorize">Login</a>.</p>
+          </li>
+    {% endif %}
+
+  </div>
+{% endblock %}
