@@ -8,6 +8,8 @@ STRAVA_WEB_PWD = os.getenv("STRAVA_WEB_PWD")
 STRAVA_API_CLIENTID = os.getenv("STRAVA_API_CLIENTID")
 STRAVA_API_CLIENTSECRET = os.getenv("STRAVA_API_CLIENTSECRET")
 
+APP_KEY = os.getenv("APP_KEY")
+
 STRAVA_OAUTH_REDIRECT = os.getenv("STRAVA_OAUTH_REDIRECT")
 
 # list of clubs to build leaderboards for

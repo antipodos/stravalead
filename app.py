@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, session, render_template
 from flask_bootstrap import Bootstrap
 import os
-from env import STRAVA_API_CLIENTID, STRAVA_API_CLIENTSECRET, YEAR, STRAVA_OAUTH_REDIRECT
+from env import STRAVA_API_CLIENTID, STRAVA_API_CLIENTSECRET, YEAR, STRAVA_OAUTH_REDIRECT, APP_KEY
 import requests
 from base import Session
 from models.ClubMembers import Club, Stats, Athlete
@@ -9,7 +9,7 @@ from sqlalchemy import desc
 from StravaAPI import StravaAPI
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = APP_KEY
 Bootstrap(app)
 
 dbsession = Session()
