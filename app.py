@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, session, render_template
 from flask_bootstrap import Bootstrap
 import os
-from env import STRAVA_API_CLIENTID, STRAVA_API_CLIENTSECRET, YEAR
+from env import STRAVA_API_CLIENTID, STRAVA_API_CLIENTSECRET, YEAR, STRAVA_OAUTH_REDIRECT
 import requests
 from base import Session
 from models.ClubMembers import Club, Stats, Athlete
@@ -27,9 +27,9 @@ def authorize():
     return redirect("https://www.strava.com/oauth/authorize?"
                     "client_id={}"
                     "&response_type=code"
-                    "&redirect_uri=http://localhost:5000/oauth"
+                    "&redirect_uri={}"
                     "&scope=read"
-                    "&approval_prompt=force".format(STRAVA_API_CLIENTID))
+                    "&approval_prompt=force".format(STRAVA_API_CLIENTID, STRAVA_OAUTH_REDIRECT))
 
 
 @app.route("/logout", methods=["GET"])
