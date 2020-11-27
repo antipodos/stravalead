@@ -8,6 +8,8 @@ session = Session()
 
 
 def sync_ytd_stats():
+    print("syncing statistics")
+
     athletes = session.query(Athlete).all()
 
     scraper = StravaScraper(STRAVA_WEB_USER, STRAVA_WEB_PWD)

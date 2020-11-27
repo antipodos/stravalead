@@ -8,6 +8,8 @@ session = Session()
 
 
 def sync_club_members():
+    print("syncing club members")
+
     scraper = StravaScraper(STRAVA_WEB_USER, STRAVA_WEB_PWD)
     scraper.login()
 
