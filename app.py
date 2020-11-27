@@ -1,14 +1,16 @@
 from flask import Flask, request, redirect, session, render_template
 from flask_bootstrap import Bootstrap
 import os
-from env import STRAVA_API_CLIENTID, STRAVA_API_CLIENTSECRET
+from env import STRAVA_API_CLIENTID, STRAVA_API_CLIENTSECRET, YEAR
 import requests
 from base import Session
-from models.ClubMembers import Club
+from models.ClubMembers import Club, Stats, Athlete
+from sqlalchemy import desc
+from StravaAPI import StravaAPI
 
 app = Flask(__name__)
 
-session = Session()
+dbsession = Session()
 
 
 @app.route("/", methods=["GET"])
@@ -37,7 +39,29 @@ def logout():
 
 @app.route("/leaderboard", methods=["GET"])
 def leaderboard():
-    pass
+    # hack, hardcoded, provide selection in the future
+    club = "445835"
+
+    user = None
+    if session.get('user') is None or session.get('access_token') is None:
+        return redirect("/")
+    user = session['user']
+
+    api = StravaAPI(session["access_token"])
+    clubs = api.get_clubs()
+
+    # only return stats if the person is a member of the (currently) hardcoded club
+    stats = []
+    if next((c for c in clubs if str(c["id"]) == club), False):
+        stats = dbsession.query(Athlete)\
+            .join(Stats, Athlete.stats)\
+            .join(Club, Athlete.clubs)\
+            .filter(Club.id == club)\
+            .filter(Stats.year == YEAR)\
+            .order_by(desc(Stats.running_ytd_distance))\
+            .all()
+
+    return render_template('leaderboard.html', stats_list=stats, user=user)
 
 
 @app.route("/oauth", methods=["GET"])

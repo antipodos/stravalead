@@ -27,6 +27,8 @@ class Athlete(Base):
     lastname = Column(String)
     update_timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 
+    clubs = relationship("Club", secondary=club_athletes_association)
+
     stats = relationship("Stats")
 
     def __init__(self, id, firstname, lastname):

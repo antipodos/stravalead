@@ -20,7 +20,7 @@ class StravaScraper:
         self.login_url = "%s/login" % self.base_url
         self.session_url = "%s/session" % self.base_url
         self.dashboard_url = "%s/dashboard" % self.base_url
-        self.leaderboard_url = "{}/clubs/{}/leaderboard"
+        self.leaderboard_url = "{}/clubs/{}/leaderboard?week_offset={}"
         self.stats_url = "{}/athletes/{}/profile_sidebar_comparison?ytd_year={}"
 
     def get_page(self, url):
@@ -57,8 +57,9 @@ class StravaScraper:
         response.raise_for_status()
         response = self.get_page(self.dashboard_url)
 
-    def get_club_leaderboard(self, club_id):
-        url = self.leaderboard_url.format(self.base_url, club_id)
+    def get_club_leaderboard(self, club_id, week_offset=0):
+
+        url = self.leaderboard_url.format(self.base_url, club_id, week_offset)
         response = self.get_page_xhr(url)
         response.raise_for_status()
 
@@ -70,5 +71,12 @@ class StravaScraper:
         soup = BeautifulSoup(response.content, 'html.parser')
 
         # hack hack hack
-        distance = soup.find(id="running-ytd").find_next("tr").find_all("td")[1].text.replace(" km", "").replace(" mi", "")
-        return float(distance.replace(",", ""))
+        try:
+            dist_ext = soup.find(id="running-ytd").find_next("tr").find_all("td")[1].text.replace(" km", "")
+            distance = float(dist_ext.replace(",", ""))
+        except:
+            distance = 0
+
+        return distance
+
+
