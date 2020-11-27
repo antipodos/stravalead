@@ -86,6 +86,8 @@ def exchange_token():
         result = r.json()
         session["access_token"] = result["access_token"]
         session["user"] = result["athlete"]
+    else:
+        print(r.text)
 
     return redirect('/')
 
