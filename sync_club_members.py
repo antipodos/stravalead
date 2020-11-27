@@ -25,6 +25,9 @@ def sync_club_members():
             if not athlete:
                 athlete = Athlete(a["athlete_id"], a["athlete_firstname"], a["athlete_lastname"])
                 session.add(athlete)
+            else:
+                athlete.firstname = a["athlete_firstname"]
+                athlete.lastname = a["athlete_lastname"]
 
             if athlete not in club.athletes:
                 club.athletes.append(athlete)
