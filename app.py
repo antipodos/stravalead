@@ -30,7 +30,7 @@ def authorize():
                     "&response_type=code"
                     "&redirect_uri={}"
                     "&scope=read"
-                    "&approval_prompt=force".format(STRAVA_API_CLIENTID, STRAVA_OAUTH_REDIRECT))
+                    "&approval_prompt=auto".format(STRAVA_API_CLIENTID, STRAVA_OAUTH_REDIRECT))
 
 
 @app.route("/logout", methods=["GET"])
