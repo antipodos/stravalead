@@ -1,9 +1,15 @@
 {% extends "bootstrap/base.html" %}
+
+{% block head %}
+{{super()}}
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{% endblock %}
+
 {% block title %}Strava Annual Leaderboard{% endblock %}
 
 {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">X-Centis Run</a>
+  <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='favicon-32x32.png') }}"> X-Centis Run</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
