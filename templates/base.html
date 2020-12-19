@@ -3,6 +3,14 @@
 {% block head %}
 {{super()}}
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+  <meta property="og:title" content="X-Centis Run">
+  <meta property="og:site_name" content="X-Centis Run - Annual Leaderboard and Chart Race">
+  <meta property="og:url" content="https://xcentis-run.herokuapp.com/">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="{{ url_for('static', filename='logo.png') }}">
+
 {% endblock %}
 
 {% block title %}Strava Annual Leaderboard{% endblock %}

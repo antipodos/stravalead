@@ -108,6 +108,7 @@ def chart_race():
 
     return render_template('chartrace.html', video=video)
 
+
 @app.route("/oauth", methods=["GET"])
 def exchange_token():
     access = request.args.get('code')
