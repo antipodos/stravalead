@@ -63,19 +63,32 @@ def leaderboard():
     # hack, hardcoded, provide selection in the future
     club = "445835"
 
-    api = StravaAPI(session["access_token"])
+    api = StravaAPI(STRAVA_API_CLIENTID,
+                    STRAVA_API_CLIENTSECRET,
+                    session["access_token"],
+                    session["refresh_token"],
+                    session["access_token_expires_at"])
+
+    if api.is_access_token_expired():
+        api.refresh_access_token()
+        session["access_token"] = api.access_token
+        session["refresh_token"] = api.refresh_token
+        session["access_token_expires_at"] = api.expires_at
+
     clubs = api.get_clubs()
 
     # only return stats if the person is a member of the (currently) hardcoded club
     stats = []
-    if next((c for c in clubs if str(c["id"]) == club), False):
-        stats = dbsession.query(Athlete)\
-            .join(Stats, Athlete.stats)\
-            .join(Club, Athlete.clubs)\
-            .filter(Club.id == club)\
-            .filter(Stats.year == YEAR)\
-            .order_by(desc(Stats.running_ytd_distance))\
-            .all()
+
+    if clubs is not None:
+        if next((c for c in clubs if str(c["id"]) == club), False):
+            stats = dbsession.query(Athlete)\
+                .join(Stats, Athlete.stats)\
+                .join(Club, Athlete.clubs)\
+                .filter(Club.id == club)\
+                .filter(Stats.year == YEAR)\
+                .order_by(desc(Stats.running_ytd_distance))\
+                .all()
 
     return render_template('leaderboard.html', stats_list=stats)
 
@@ -88,12 +101,15 @@ def exchange_token():
 
     code = request.args.get('code')
 
-    response = StravaAPI.get_access_token(STRAVA_API_CLIENTID, STRAVA_API_CLIENTSECRET, code)
+    api = StravaAPI(STRAVA_API_CLIENTID, STRAVA_API_CLIENTSECRET)
+    athlete = api.get_access_token(code)
 
-    if response is not None:
-        session["access_token"] = response["access_token"]
-        session["user"] = response["athlete"]
-        u = User(response["athlete"]["id"])
+    if api.access_token is not None:
+        session["access_token"] = api.access_token
+        session["access_token_expires_at"] = api.expires_at
+        session["refresh_token"] = api.refresh_token
+        session["user"] = athlete
+        u = User(athlete["id"])
         u.authenticated = True
         login_user(u, remember=True)
     else:
