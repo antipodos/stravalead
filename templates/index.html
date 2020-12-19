@@ -2,9 +2,9 @@
 
 {% block content %}
   <div class="jumbotron">
-    {% if user %}
+    {% if current_user.is_authenticated %}
 
-      <h1 class="display-4">Hello, {{ user.firstname }}!</h1>
+      <h1 class="display-4">Hello, {{ current_user.firstname }}!</h1>
       <p class="lead">Take a look at the annual club leader boards!</p>
       <hr class="my-4">
       <p>This app is able to read your activity feed. It does not store any of the data.</p>

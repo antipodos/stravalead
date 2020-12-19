@@ -7,6 +7,21 @@ class StravaAPI:
         self.access_token = access_token
         self.baseURL = "https://www.strava.com/"
 
+    @staticmethod
+    def get_access_token(client_id, api_secret, code):
+        params = {
+            "client_id": client_id,
+            "client_secret": api_secret,
+            "code": code,
+            "grant_type": "authorization_code"
+        }
+        r = requests.post("https://www.strava.com/oauth/token", params)
+
+        if r.status_code == 200:
+            return r.json()
+        else:
+            return None
+
     def get_headers(self):
         return { "Authorization": "Bearer {}".format(self.access_token) }
 
