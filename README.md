@@ -2,7 +2,7 @@
 
 ## install
 Built for heroku. Best installed by creating a heroku app, cloning this repository, setting git remotes to the heroku repo, pushing and deploying the app on heroku. Finally running the dyno. Recommended: use heroku postgres for persistence, heroku scheduler for scheduling the jobs.
-Make sure to add the ffmpeg needed for creating the bar chart race video. 
+Make sure to add the ffmpeg buildpack needed for creating the bar chart race video. 
 
 ## environment
 Needs the following environment variables set:
