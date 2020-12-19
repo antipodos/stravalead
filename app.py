@@ -1,11 +1,11 @@
-from flask import g, Flask, request, redirect, session, render_template, url_for
+from flask import g, Flask, request, redirect, session, render_template
 from flask_bootstrap import Bootstrap
 from env import STRAVA_API_CLIENTID, STRAVA_API_CLIENTSECRET, YEAR, STRAVA_OAUTH_REDIRECT, APP_KEY
 from base import Session
-from models.ClubMembers import Club, Stats, Athlete
+from models.ClubMembers import Club, Stats, Athlete, ChartRaceCharts
 from sqlalchemy import desc
 from StravaAPI import StravaAPI
-from flask_login import LoginManager, login_required, login_user, current_user, logout_user, login_url
+from flask_login import LoginManager, login_required, login_user, current_user, logout_user
 from User import User
 
 app = Flask(__name__)
@@ -92,6 +92,19 @@ def leaderboard():
 
     return render_template('leaderboard.html', stats_list=stats)
 
+
+@app.route("/chartrace", methods=["GET"])
+@login_required
+def chart_race():
+    # hack, hardcoded, provide selection in the future
+    club = "445835"
+
+    chart = dbsession.query(ChartRaceCharts) \
+        .filter(ChartRaceCharts.club_id == club) \
+        .filter(ChartRaceCharts.year == YEAR) \
+        .first()
+
+    return render_template('chartrace.html', video=chart.video_html)
 
 @app.route("/oauth", methods=["GET"])
 def exchange_token():

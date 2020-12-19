@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime, String, Table, ForeignKey, Float
+from sqlalchemy import Column, Integer, DateTime, String, Table, ForeignKey, Float, Text
 from sqlalchemy.orm import relationship
 from base import Base
 import datetime
@@ -38,6 +38,32 @@ class Athlete(Base):
 
     def set_update_timestamp(self):
         self.update_timestamp = datetime.datetime.utcnow()
+
+
+class ChartRace(Base):
+    __tablename__ = "chartrace"
+
+    athlete_id = Column(Integer, ForeignKey('athlete.id'), primary_key=True)
+    year = Column(Integer, primary_key=True)
+    week = Column(Integer, primary_key=True)
+    distance = Column(Float)
+
+    def __init__(self, athlete_id, year, week, distance):
+        self.athlete_id = athlete_id
+        self.year = year
+        self.week = week
+        self.distance = distance
+
+class ChartRaceCharts(Base):
+    __tablename__ = "chartracechart"
+    club_id = Column(Integer, ForeignKey('club.id'), primary_key=True)
+    year = Column(Integer, primary_key=True)
+    video_html = Column(Text)
+
+    def __init__(self, club_id, year, video_html):
+        self.club_id = club_id
+        self.year = year
+        self.video_html = video_html
 
 
 class Stats(Base):

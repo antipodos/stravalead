@@ -5,11 +5,12 @@
     {% if current_user.is_authenticated %}
 
       <h1 class="display-4">Hello, {{ current_user.firstname }}!</h1>
-      <p class="lead">Take a look at the annual club leader boards!</p>
+      <p class="lead">Take a look at the annual club leader board, or follow the chart race for the year!</p>
       <hr class="my-4">
-      <p>This app is able to read your activity feed. It does not store any of the data.</p>
+      <p>This app is able to read your activity feed, however it does not use the API to access or store any of your data.</p>
       <p class="lead">
-        <a class="btn btn-primary btn-lg" href="/leaderboard" role="button">Go to the Leaderboard</a>
+        <a class="btn btn-primary btn-lg" href="/leaderboard" role="button">Leaderboard</a>
+        <a class="btn btn-primary btn-lg" href="/chartrace" role="button">Chart Race</a>
       </p>
 
     {% else %}
