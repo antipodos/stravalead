@@ -20,8 +20,8 @@ look at `env.py` for a description of configuration options
 
 ## scheduled jobs
 
-There are three jobs that should be scheduled to run at a regular basis:
+There are three jobs that should be scheduled to run on a regular basis:
 
-- `sync_club_members` used to access leader boards and grab there member athletes. Proposed cadence: daily.
-- `sync_ytd_stats` gets annual distances for every athlete in the database. Run daily.
-- `sync_chart_race_stats` gets the data for - and builds the - bar chart race. Run once a week.
+- `sync_club_members` used to access leader boards and grab their member athletes. Proposed cadence: daily.
+- `sync_ytd_stats` gets annual distances for every athlete in the database. Should run daily.
+- `sync_chart_race_stats` gets the data for - and builds - the bar chart race. Run it once a week.
