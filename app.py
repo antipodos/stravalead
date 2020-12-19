@@ -104,7 +104,9 @@ def chart_race():
         .filter(ChartRaceCharts.year == YEAR) \
         .first()
 
-    return render_template('chartrace.html', video=chart.video_html)
+    video = chart.video_html if chart is not None else "no chart race available"
+
+    return render_template('chartrace.html', video=video)
 
 @app.route("/oauth", methods=["GET"])
 def exchange_token():
