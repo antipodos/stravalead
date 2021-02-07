@@ -96,6 +96,8 @@ def leaderboard():
 @app.route("/chartrace", methods=["GET"])
 @login_required
 def chart_race():
+    return render_template('chartrace.html', video="chart race gets activated towards the end of the year")
+
     # hack, hardcoded, provide selection in the future
     club = "445835"
 
