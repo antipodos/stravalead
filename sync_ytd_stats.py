@@ -18,7 +18,7 @@ def sync_ytd_stats():
     for athlete in athletes:
         distance = scraper.get_athlete_stats(athlete.id, YEAR)
 
-        stats = session.query(Stats).filter(Stats.athlete_id == athlete.id and Stats.year == YEAR).first()
+        stats = session.query(Stats).filter(Stats.athlete_id == athlete.id).filter(Stats.year == YEAR).first()
         if not stats:
             stats = Stats(athlete.id, YEAR, distance)
             session.add(stats)
