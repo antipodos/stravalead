@@ -15,10 +15,10 @@
     {% for item in stats_list %}
       <tr>
         <th>{{ loop.index }}</th>
-        <td>{{ item.firstname }}</td>
-        <td>{{ item.lastname }}</td>
-        <td>{{ item.stats[0].running_ytd_distance }}</td>
-        <td>{{ item.update_timestamp }}</td>
+        <td>{{ item.Athlete.firstname }}</td>
+        <td>{{ item.Athlete.lastname }}</td>
+        <td>{{ item.Stats.running_ytd_distance }}</td>
+        <td>{{ item.Athlete.update_timestamp }}</td>
       </tr>
     {% endfor %}
 

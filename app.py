@@ -82,7 +82,7 @@ def leaderboard():
 
     if clubs is not None:
         if next((c for c in clubs if str(c["id"]) == club), False):
-            stats = dbsession.query(Athlete)\
+            stats = dbsession.query(Athlete, Stats)\
                 .join(Stats, Athlete.stats)\
                 .join(Club, Athlete.clubs)\
                 .filter(Club.id == club)\
